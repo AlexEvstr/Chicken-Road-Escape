@@ -22,11 +22,11 @@ public class PauseMenu : MonoBehaviour
     public void RestartGame()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene("GameScene");
+        SceneManager.LoadScene("Gameplay");
     }
     public void QuitToMain()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene("MenuScene");
+        SceneManager.LoadScene("MainMenu");
     }
 }

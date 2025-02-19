@@ -28,6 +28,6 @@ public class MenuManager : MonoBehaviour
     private IEnumerator StartGameWithDelay()
     {
         yield return new WaitForSeconds(0.25f);
-        SceneManager.LoadScene("GameScene");
+        SceneManager.LoadScene("Gameplay");
     }
 }

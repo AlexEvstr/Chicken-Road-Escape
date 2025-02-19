@@ -3,21 +3,33 @@
 public class StarGenerator : MonoBehaviour
 {
     public float distanceBetweenStars;
-
+    public float heightBetweenStars;
     public ObjectPooler starPool;
 
-    public void spawnStars (Vector3 StartPosition)
+    public void spawnStars(Vector3 startPosition)
     {
-        GameObject star1 = starPool.getPooledObject();
-        star1.transform.position = StartPosition;
-        star1.SetActive(true);
+        int pattern = Random.Range(0, 3); // 0 - горизонталь, 1 - вертикаль, 2 - треугольник
+        int starCount = (pattern == 1) ? Random.Range(1, 6) : Random.Range(1, 4);
 
-        GameObject star2 = starPool.getPooledObject();
-        star2.transform.position = new Vector3(StartPosition.x - distanceBetweenStars, StartPosition.y, StartPosition.z);
-        star2.SetActive(true);
-
-        GameObject star3 = starPool.getPooledObject();
-        star3.transform.position = new Vector3(StartPosition.x + distanceBetweenStars, StartPosition.y, StartPosition.z);
-        star3.SetActive(true);
+        for (int i = 0; i < starCount; i++)
+        {
+            GameObject star = starPool.getPooledObject();
+            if (star != null)
+            {
+                if (pattern == 0) // Горизонтальная линия
+                {
+                    star.transform.position = new Vector3(startPosition.x + (i * distanceBetweenStars), startPosition.y, startPosition.z);
+                }
+                else if (pattern == 1) // Вертикальная линия
+                {
+                    star.transform.position = new Vector3(startPosition.x, startPosition.y + (i * heightBetweenStars), startPosition.z);
+                }
+                else if (pattern == 2) // Треугольник
+                {
+                    star.transform.position = new Vector3(startPosition.x + (i * distanceBetweenStars) - (i / 2f * distanceBetweenStars), startPosition.y + (i * heightBetweenStars), startPosition.z);
+                }
+                star.SetActive(true);
+            }
+        }
     }
 }

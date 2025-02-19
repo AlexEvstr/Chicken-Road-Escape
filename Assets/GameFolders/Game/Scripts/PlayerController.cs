@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -35,6 +36,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private LifeManager _lifeManager;
     [SerializeField] private GameObject _boom;
 
+    private Vector3 originalScale;
+    private bool isShrinking = false;
+
     void Start()
     {
         jumpSound.volume = PlayerPrefs.GetFloat("SoundVolume", 1);
@@ -50,6 +54,8 @@ public class PlayerController : MonoBehaviour
 
         _gameSounds = theGameManager.GetComponent<GameSounds>();
         _vibration = PlayerPrefs.GetFloat("VibroStatus", 1);
+
+        originalScale = GetComponent<Transform>().transform.localScale;
     }
 
     void Update()
@@ -101,6 +107,42 @@ public class PlayerController : MonoBehaviour
             PlayerPrefs.SetString("Achieve_2_date", currentDate);
         }
 
+    }
+
+    public void ShrinkTemporarily(float duration)
+    {
+        if (!isShrinking && transform.gameObject.activeInHierarchy)
+        {
+            StartCoroutine(FastShrinkCoroutine(1.5f));
+        }
+    }
+
+    private IEnumerator FastShrinkCoroutine(float duration)
+    {
+        isShrinking = true;
+        Vector3 targetScale = new Vector3(0.75f, 0.75f, 0.75f);
+        float shrinkTime = duration * 0.1f;
+        float elapsedTime = 0f;
+
+        while (elapsedTime < shrinkTime)
+        {
+            transform.localScale = Vector3.Lerp(originalScale, targetScale, elapsedTime / shrinkTime);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        transform.localScale = targetScale;
+
+        yield return new WaitForSeconds(duration * 0.5f);
+
+        elapsedTime = 0f;
+        while (elapsedTime < shrinkTime)
+        {
+            transform.localScale = Vector3.Lerp(targetScale, originalScale, elapsedTime / shrinkTime);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        transform.localScale = originalScale;
+        isShrinking = false;
     }
 
     void OnCollisionEnter2D(Collision2D other)

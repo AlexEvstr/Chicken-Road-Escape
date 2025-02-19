@@ -67,17 +67,17 @@ public class PlatformGenerator : MonoBehaviour
             newPlatform.transform.rotation = transform.rotation;
             newPlatform.SetActive(true);
 
-            if (Random.Range(0f, 100f) < powerUpThreshold)
-            {
-                Vector3 powerUpPos = transform.position + new Vector3(distanceBetween / 2f, Random.Range(powerUpHeight / 2, powerUpHeight), 0f);
-                if (!IsPositionOccupied(powerUpPos, occupiedPositions, 1f))
-                {
-                    GameObject newPowerUp = powerUpPool.getPooledObject();
-                    newPowerUp.transform.position = powerUpPos;
-                    newPowerUp.SetActive(true);
-                    occupiedPositions.Add(powerUpPos);
-                }
-            }
+            //if (Random.Range(0f, 100f) < powerUpThreshold)
+            //{
+            //    Vector3 powerUpPos = transform.position + new Vector3(distanceBetween / 2f, Random.Range(powerUpHeight / 2, powerUpHeight), 0f);
+            //    if (!IsPositionOccupied(powerUpPos, occupiedPositions, 1f))
+            //    {
+            //        GameObject newPowerUp = powerUpPool.getPooledObject();
+            //        newPowerUp.transform.position = powerUpPos;
+            //        newPowerUp.SetActive(true);
+            //        occupiedPositions.Add(powerUpPos);
+            //    }
+            //}
 
             if (Random.Range(0f, 100f) < randomSpikeThreshold)
             {
@@ -86,8 +86,9 @@ public class PlatformGenerator : MonoBehaviour
 
                 while (!foundPosition && attempts > 0)
                 {
-                    float spikePositionX = Random.Range(-platformWidths[PlatformSelector] / 2 + 1f, platformWidths[PlatformSelector] / 2 - 1f);
-                    Vector3 spikePos = transform.position + new Vector3(spikePositionX, 1f, 0f);
+                    //float spikePositionX = Random.Range(-platformWidths[PlatformSelector] / 2 + 1f, platformWidths[PlatformSelector] / 2 - 1f);
+                    float spikePositionX = 0;
+                    Vector3 spikePos = transform.position + new Vector3(spikePositionX, 6f, 0f);
 
                     if (!IsPositionOccupied(spikePos, occupiedPositions, 1f))
                     {
@@ -104,7 +105,7 @@ public class PlatformGenerator : MonoBehaviour
 
             if (Random.Range(0f, 100f) < randomStarThreshold)
             {
-                Vector3 starPos = new Vector3(transform.position.x, transform.position.y + 1f, transform.position.z);
+                Vector3 starPos = new Vector3(transform.position.x, transform.position.y + 1.5f, transform.position.z);
                 if (!IsPositionOccupied(starPos, occupiedPositions, 1f))
                 {
                     theStarGenerator.spawnStars(starPos);
