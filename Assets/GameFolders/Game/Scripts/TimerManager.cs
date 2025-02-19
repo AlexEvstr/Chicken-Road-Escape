@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class TimerManager : MonoBehaviour
 {
-    private float timerDuration = 300;
+    private float timerDuration;
     private float timeElapsed = 0f;
 
     public Text timerText;
@@ -21,9 +21,12 @@ public class TimerManager : MonoBehaviour
     private CoinController _coinController;
 
     private bool isRunning = false;
+    private int _currentLevel;
 
     void Start()
     {
+        _currentLevel = PlayerPrefs.GetInt("CurrentLevel", 1);
+        timerDuration = _currentLevel * 10;
         _playerController = FindObjectOfType<PlayerController>();
         timeElapsed = 0f;
         isRunning = true;
@@ -40,66 +43,46 @@ public class TimerManager : MonoBehaviour
                 timeElapsed += Time.deltaTime;
                 UpdateUI();
 
-                if (timeElapsed >= 60)
-                {
-                    PlayerPrefs.SetInt("Achieve_1", 1);
-                    string currentDate = DateTime.Now.ToString("dd.MM.yyyy");
-                    PlayerPrefs.SetString("Achieve_1_date", currentDate);
-                }
-                if (timeElapsed >= 180)
-                {
-                    PlayerPrefs.SetInt("Achieve_3", 1);
-                    string currentDate = DateTime.Now.ToString("dd.MM.yyyy");
-                    PlayerPrefs.SetString("Achieve_3_date", currentDate);
-                }
-                if (timeElapsed >= 300)
-                {
-                    PlayerPrefs.SetInt("Achieve_4", 1);
-                    string currentDate = DateTime.Now.ToString("dd.MM.yyyy");
-                    PlayerPrefs.SetString("Achieve_4_date", currentDate);
-                }
+                //if (timeElapsed >= 60)
+                //{
+                //    PlayerPrefs.SetInt("Achieve_1", 1);
+                //    string currentDate = DateTime.Now.ToString("dd.MM.yyyy");
+                //    PlayerPrefs.SetString("Achieve_1_date", currentDate);
+                //}
+                //if (timeElapsed >= 180)
+                //{
+                //    PlayerPrefs.SetInt("Achieve_3", 1);
+                //    string currentDate = DateTime.Now.ToString("dd.MM.yyyy");
+                //    PlayerPrefs.SetString("Achieve_3_date", currentDate);
+                //}
+                //if (timeElapsed >= 300)
+                //{
+                //    PlayerPrefs.SetInt("Achieve_4", 1);
+                //    string currentDate = DateTime.Now.ToString("dd.MM.yyyy");
+                //    PlayerPrefs.SetString("Achieve_4_date", currentDate);
+                //}
             }
             else
             {
                 timeElapsed = timerDuration;
                 isRunning = false;
-                timerText.text = "0:00";
+                timerText.text = "100%";
                 _playerController.WinBehavior();
+                _currentLevel++;
+                PlayerPrefs.SetInt("CurrentLevel", _currentLevel);
             }
         }
     }
 
     private void UpdateUI()
     {
-        float timeRemaining = timerDuration - timeElapsed;
-        int minutesRemaining = Mathf.FloorToInt(timeRemaining / 60);
-        int secondsRemaining = Mathf.FloorToInt(timeRemaining % 60);
-        timerText.text = $"{minutesRemaining}:{secondsRemaining:D2}";
-
-        int minutesElapsed = Mathf.FloorToInt(timeElapsed / 60);
-        int secondsElapsed = Mathf.FloorToInt(timeElapsed % 60);
-        string elapsedTimeFormatted = $"{minutesElapsed}:{secondsElapsed:D2}";
-
-        foreach (Text elapsedText in elapsedTimeTexts)
-        {
-            if (elapsedText != null)
-            {
-                elapsedText.text = elapsedTimeFormatted;
-            }
-        }
-
+        //float timeRemaining = timerDuration - timeElapsed;
+        //int minutesRemaining = Mathf.FloorToInt(timeRemaining / 60);
+        //int secondsRemaining = Mathf.FloorToInt(timeRemaining % 60);
+        //timerText.text = $"{minutesRemaining}:{secondsRemaining:D2}";
         float fillAmount = timeElapsed / timerDuration;
         progressBar.fillAmount = fillAmount;
-
-        if (progressIndicator != null)
-        {
-            RectTransform barRect = progressBar.rectTransform;
-            RectTransform indicatorRect = progressIndicator.rectTransform;
-
-            float barWidth = barRect.rect.width;
-            float newX = Mathf.Lerp(-barWidth / 2, barWidth / 2, fillAmount);
-            indicatorRect.localPosition = new Vector3(newX, indicatorRect.localPosition.y, 0);
-        }
+        timerText.text = $"{Mathf.CeilToInt(fillAmount * 100)}%";
     }
 
     public void SaveResult()

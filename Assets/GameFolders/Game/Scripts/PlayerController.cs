@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -38,6 +39,7 @@ public class PlayerController : MonoBehaviour
 
     private Vector3 originalScale;
     private bool isShrinking = false;
+    [SerializeField] private Text speedText;
 
     void Start()
     {
@@ -56,18 +58,15 @@ public class PlayerController : MonoBehaviour
         _vibration = PlayerPrefs.GetFloat("VibroStatus", 1);
 
         originalScale = GetComponent<Transform>().transform.localScale;
+
+        StartCoroutine(IncreaseSpeedOverTime());
     }
 
     void Update()
     {
         grounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, WhatIsGround);
 
-        if (transform.position.x > speedUpDistanceCount)
-        {
-            speedUpDistanceCount += speedUpDistance;
-            speedUpDistance *= speedMultiplier;
-            moveSpeed *= speedMultiplier;
-        }
+        speedText.text = (moveSpeed - 7.0f).ToString("F2") + "x";
 
         myRigidbody.velocity = new Vector2(moveSpeed, myRigidbody.velocity.y);
 
@@ -78,6 +77,15 @@ public class PlayerController : MonoBehaviour
 
         myAnimator.SetFloat("Speed", myRigidbody.velocity.x);
         myAnimator.SetBool("Grounded", grounded);
+    }
+
+    private IEnumerator IncreaseSpeedOverTime()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(1f);
+            moveSpeed += 0.01f;
+        }
     }
 
     public void Jump()
@@ -109,7 +117,7 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    public void ShrinkTemporarily(float duration)
+    public void ShrinkTemporarily()
     {
         if (!isShrinking && transform.gameObject.activeInHierarchy)
         {
@@ -120,7 +128,7 @@ public class PlayerController : MonoBehaviour
     private IEnumerator FastShrinkCoroutine(float duration)
     {
         isShrinking = true;
-        Vector3 targetScale = new Vector3(0.75f, 0.75f, 0.75f);
+        Vector3 targetScale = new Vector3(1f, 1f, 1f);
         float shrinkTime = duration * 0.1f;
         float elapsedTime = 0f;
 
