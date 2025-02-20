@@ -9096,6 +9096,7 @@ MonoBehaviour:
   _losePanel: {fileID: 1003625199}
   _pausePanel: {fileID: 1080123309}
   _currentLevelText: {fileID: 607529901}
+  _nextBtn: {fileID: 633955779}
 --- !u!114 &2141783413
 MonoBehaviour:
   m_ObjectHideFlags: 0

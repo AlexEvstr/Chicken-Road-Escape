@@ -23,6 +23,7 @@ public class TimerManager : MonoBehaviour
     private bool isRunning = false;
     private int _currentLevel;
     [SerializeField] private Text _currentLevelText;
+    [SerializeField] private GameObject _nextBtn;
 
     void Start()
     {
@@ -72,6 +73,17 @@ public class TimerManager : MonoBehaviour
                 _playerController.WinBehavior();
                 _currentLevel++;
                 PlayerPrefs.SetInt("CurrentLevel", _currentLevel);
+                if (_currentLevel >= 10)
+                {
+                    _currentLevel = 10;
+                    _nextBtn.SetActive(false);
+                }
+                int bestLevel = PlayerPrefs.GetInt("BestLevel", 1);
+                if (_currentLevel >= bestLevel)
+                {
+                    bestLevel = _currentLevel;
+                    PlayerPrefs.SetInt("BestLevel", bestLevel);
+                }
             }
         }
     }

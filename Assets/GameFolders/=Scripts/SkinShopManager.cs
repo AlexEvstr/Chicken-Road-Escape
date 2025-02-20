@@ -1,4 +1,3 @@
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -76,7 +75,7 @@ public class SkinShopManager : MonoBehaviour
 
     private void LoadSkins()
     {
-        totalCoins = PlayerPrefs.GetInt("TotalCoins", 15000);
+        totalCoins = PlayerPrefs.GetInt("TotalCoins", 0);
         selectedSkinIndex = PlayerPrefs.GetInt("SelectedSkin", 0);
 
         for (int i = 0; i < skinButtons.Length; i++)
