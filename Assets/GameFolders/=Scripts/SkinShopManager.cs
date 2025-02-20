@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,6 +12,9 @@ public class SkinShopManager : MonoBehaviour
 
     private MenuOptions _menuOptions;
 
+    [SerializeField] private GameObject[] _LivesPrice;
+    [SerializeField] private GameObject[] _LivesText;
+
     void Start()
     {
         CheckDefaultSkin();
@@ -18,6 +22,9 @@ public class SkinShopManager : MonoBehaviour
         UpdateCoinDisplay();
 
         _menuOptions = GetComponent<MenuOptions>();
+
+        CheckLifes(0);
+        CheckLifes(1);
     }
 
     public void BuyOrEquipSkin(int skinIndex)
@@ -69,7 +76,7 @@ public class SkinShopManager : MonoBehaviour
 
     private void LoadSkins()
     {
-        totalCoins = PlayerPrefs.GetInt("TotalCoins", 0);
+        totalCoins = PlayerPrefs.GetInt("TotalCoins", 15000);
         selectedSkinIndex = PlayerPrefs.GetInt("SelectedSkin", 0);
 
         for (int i = 0; i < skinButtons.Length; i++)
@@ -99,5 +106,50 @@ public class SkinShopManager : MonoBehaviour
             PlayerPrefs.SetInt("SelectedSkin", 0);
             PlayerPrefs.Save();
         }
+    }
+
+    public void Buy1Life()
+    {
+        BuyLife(450, 0);
+    }
+
+    public void Buy3Lifes()
+    {
+        BuyLife(1100, 1);
+    }
+
+    private void BuyLife(int price, int index)
+    {
+        int status = PlayerPrefs.GetInt($"Life_{index}_Purchased", 0);
+        if (status == 0)
+        {
+            int livePrice = price;
+            if (totalCoins >= livePrice)
+            {
+                totalCoins -= livePrice;
+                PlayerPrefs.SetInt("TotalCoins", totalCoins);
+                PlayerPrefs.SetInt($"Life_{index}_Purchased", 1);
+                MakeLivesBought(index);
+                UpdateCoinDisplay();
+                _menuOptions.PlayBuySound();
+            }
+            else
+            {
+                _menuOptions.PlayFailSound();
+            }
+        }
+        
+    }
+
+    private void MakeLivesBought(int index)
+    {
+        _LivesPrice[index].SetActive(false);
+        _LivesText[index].SetActive(true);
+    }
+
+    private void CheckLifes(int index)
+    {
+        int status = PlayerPrefs.GetInt($"Life_{index}_Purchased", 0);
+        if (status == 1) MakeLivesBought(index);
     }
 }

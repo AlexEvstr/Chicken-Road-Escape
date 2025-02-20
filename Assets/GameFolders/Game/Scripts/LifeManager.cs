@@ -15,8 +15,17 @@ public class LifeManager : MonoBehaviour
     {
         _chicken = GameObject.FindWithTag("Player");
         _playerController = FindObjectOfType<PlayerController>();
-        currentLives = PlayerPrefs.GetInt("CurrentLives", 1);
-        PlayerPrefs.SetInt("CurrentLives", 50);
+        currentLives = 2;
+        if (PlayerPrefs.GetInt($"Life_0_Purchased", 0) == 1)
+        {
+            currentLives += 1;
+            PlayerPrefs.SetInt($"Life_0_Purchased", 0);
+        }
+        if (PlayerPrefs.GetInt($"Life_1_Purchased", 0) == 1)
+        {
+            currentLives += 3;
+            PlayerPrefs.SetInt($"Life_1_Purchased", 0);
+        }
         _livesText.text = $"x{currentLives}";
     }
 

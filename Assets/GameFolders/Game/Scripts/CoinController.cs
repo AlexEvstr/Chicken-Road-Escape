@@ -1,4 +1,4 @@
-using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,6 +8,10 @@ public class CoinController : MonoBehaviour
     [SerializeField] private Text[] _currentCoinsText;
     private int _totalCoinsAmount;
     private int _currentCoins = 0;
+    [SerializeField] private GameObject _plusCoins;
+
+    private int _coinsIncreaseCount = 0;
+    private float _lastCheckTime = 0f;
 
     private void Start()
     {
@@ -31,12 +35,30 @@ public class CoinController : MonoBehaviour
         _currentCoins += coinsToIncrese;
         _totalCoinsAmount += coinsToIncrese;
         UpdateCouinsText();
-        if (_currentCoins >= 100)
+
+        if (Time.time - _lastCheckTime > 0.5f)
         {
-            PlayerPrefs.SetInt("Achieve_0", 1);
-            string currentDate = DateTime.Now.ToString("dd.MM.yyyy");
-            PlayerPrefs.SetString("Achieve_0_date", currentDate);
+            _coinsIncreaseCount = 0;
         }
+
+        _coinsIncreaseCount++;
+        _lastCheckTime = Time.time;
+
+        UpdateCouinsText();
+        StartCoroutine(ShowPlus10());
+    }
+
+    private IEnumerator ShowPlus10()
+    {
+        //yield return new WaitForSeconds(1.0f);
+        if (_plusCoins.activeInHierarchy) _plusCoins.SetActive(false);
+        if (_coinsIncreaseCount != 0)
+            _plusCoins.GetComponent<Text>().text = (_coinsIncreaseCount * 10).ToString();
+        else
+            _plusCoins.GetComponent<Text>().text = 10.ToString();
+        _plusCoins.SetActive(true);
+        yield return new WaitForSeconds(0.5f);
+        _plusCoins.SetActive(false);
     }
 
     public int ReturnCurrentCoinsAmount()
