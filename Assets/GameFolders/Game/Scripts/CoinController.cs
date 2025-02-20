@@ -53,9 +53,9 @@ public class CoinController : MonoBehaviour
         //yield return new WaitForSeconds(1.0f);
         if (_plusCoins.activeInHierarchy) _plusCoins.SetActive(false);
         if (_coinsIncreaseCount != 0)
-            _plusCoins.GetComponent<Text>().text = (_coinsIncreaseCount * 10).ToString();
+            _plusCoins.GetComponent<Text>().text = $"+{_coinsIncreaseCount * 10}";
         else
-            _plusCoins.GetComponent<Text>().text = 10.ToString();
+            _plusCoins.GetComponent<Text>().text = "+10";
         _plusCoins.SetActive(true);
         yield return new WaitForSeconds(0.5f);
         _plusCoins.SetActive(false);

@@ -158,7 +158,7 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.CompareTag("killbox"))
         {
             GameObject boom = Instantiate(_boom);
-            boom.transform.position = other.transform.position;
+            boom.transform.position = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
             Destroy(boom, 2.0f);
             other.gameObject.SetActive(false);
             _lifeManager.LoseLife();
@@ -166,12 +166,25 @@ public class PlayerController : MonoBehaviour
         }
         else if (other.gameObject.CompareTag("BottomKill"))
         {
-            LoseBehavior();
+            JumpFromSpikes(15f);
+            _lifeManager.LoseLife();
         }
+    }
+
+    public void JumpFromSpikes(float jumpForce)
+    {
+        myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, 0f); // Обнуляем вертикальную скорость
+        myRigidbody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
     }
 
     public void LoseBehavior()
     {
+        StartCoroutine(WaitAndLose());
+    }
+
+    private IEnumerator WaitAndLose()
+    {
+        yield return new WaitForSeconds(0.25f);
         _gameSounds.PlayLoseSound();
         theGameManager.RestartGame();
         moveSpeed = moveSpeedOriginal;

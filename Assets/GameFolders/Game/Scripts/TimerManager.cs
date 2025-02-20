@@ -22,10 +22,12 @@ public class TimerManager : MonoBehaviour
 
     private bool isRunning = false;
     private int _currentLevel;
+    [SerializeField] private Text _currentLevelText;
 
     void Start()
     {
         _currentLevel = PlayerPrefs.GetInt("CurrentLevel", 1);
+        _currentLevelText.text = $"LEVEL {_currentLevel} COMPLETE";
         timerDuration = _currentLevel * 10;
         _playerController = FindObjectOfType<PlayerController>();
         timeElapsed = 0f;
