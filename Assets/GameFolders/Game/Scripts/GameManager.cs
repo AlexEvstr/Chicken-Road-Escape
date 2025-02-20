@@ -42,6 +42,7 @@ public class GameManager : MonoBehaviour
 
     public void WinGame()
     {
+        _gameSounds.StopAllMusic();
         _gameSounds.PlayWinSound();
         theScoreManager.scoreIncreasing = false;
         thePlayer.gameObject.SetActive(false);

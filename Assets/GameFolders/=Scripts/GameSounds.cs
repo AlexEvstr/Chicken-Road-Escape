@@ -9,7 +9,8 @@ public class GameSounds : MonoBehaviour
     [SerializeField] private AudioClip _win;
     [SerializeField] private AudioClip _lose;
     [SerializeField] private AudioClip _bomb;
-    [SerializeField] private AudioClip _egg;
+    [SerializeField] private AudioClip _resize;
+    [SerializeField] private AudioClip _spikes;
     private float _vibration;
 
     private void Start()
@@ -44,9 +45,20 @@ public class GameSounds : MonoBehaviour
         if (_vibration == 1) Vibration.VibrateNope();
     }
 
-    public void PlayEggSound()
+    public void PlayResizeSound()
     {
-        _soundController.PlayOneShot(_egg);
+        _soundController.PlayOneShot(_resize);
+        if (_vibration == 1) Vibration.VibratePop();
+    }
+
+    public void PlaySpikesSound()
+    {
+        _soundController.PlayOneShot(_spikes);
         if (_vibration == 1) Vibration.VibratePeek();
+    }
+
+    public void StopAllMusic()
+    {
+        _musicController.Stop();
     }
 }

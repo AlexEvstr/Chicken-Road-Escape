@@ -121,6 +121,7 @@ public class PlayerController : MonoBehaviour
     {
         if (!isShrinking && transform.gameObject.activeInHierarchy)
         {
+            _gameSounds.PlayResizeSound();
             StartCoroutine(FastShrinkCoroutine(1.5f));
         }
     }
@@ -168,6 +169,7 @@ public class PlayerController : MonoBehaviour
         {
             JumpFromSpikes(15f);
             _lifeManager.LoseLife();
+            _gameSounds.PlaySpikesSound();
         }
     }
 
@@ -185,12 +187,13 @@ public class PlayerController : MonoBehaviour
     private IEnumerator WaitAndLose()
     {
         yield return new WaitForSeconds(0.25f);
+        _gameSounds.StopAllMusic();
         _gameSounds.PlayLoseSound();
         theGameManager.RestartGame();
         moveSpeed = moveSpeedOriginal;
         speedUpDistanceCount = speedUpDistanceOriginal;
         speedUpDistance = speedUpDistanceOriginal;
-        deathSound.Play();
+        //deathSound.Play();
     }
 
     public void WinBehavior()
@@ -199,6 +202,6 @@ public class PlayerController : MonoBehaviour
         moveSpeed = moveSpeedOriginal;
         speedUpDistanceCount = speedUpDistanceOriginal;
         speedUpDistance = speedUpDistanceOriginal;
-        deathSound.Play();
+        //deathSound.Play();
     }
 }

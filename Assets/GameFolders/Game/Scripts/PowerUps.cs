@@ -45,7 +45,7 @@ public class PowerUps : MonoBehaviour
         {
             _coinController.IncreaseCoins(25);
             _gameManager.IncreaseAndShow25();
-            _gameSounds.PlayEggSound();
+            //_gameSounds.PlayEggSound();
         }
         gameObject.SetActive(false);
     }

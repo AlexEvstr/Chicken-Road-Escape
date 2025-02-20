@@ -6825,7 +6825,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: d193573174baf61438bccbb245c567e6, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 4ce1531f16e9943e0b51466e80554ad9, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -7320,7 +7320,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 815e19810a4014493b539812b8f7201d, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 275f63d998f8c406c94fcd28b3442806, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -9111,11 +9111,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _soundController: {fileID: 1052407280}
   _musicController: {fileID: 1717781397}
-  _click: {fileID: 8300000, guid: b57d183d556164304844e5883fe7178c, type: 3}
-  _win: {fileID: 8300000, guid: 72c1a2121e6d141d2b96b9cf8836a258, type: 3}
-  _lose: {fileID: 8300000, guid: be1150826ed7f4dfe901f46588e6dc08, type: 3}
-  _bomb: {fileID: 8300000, guid: ba948d038d5884335954cc84016426ee, type: 3}
-  _egg: {fileID: 8300000, guid: 5f9f4409df4ce4117843500e802da7ec, type: 3}
+  _click: {fileID: 8300000, guid: f145223c271a14c228bbb3eb6f374cb2, type: 3}
+  _win: {fileID: 8300000, guid: 5c42aa7466f9e41c2915d9386818b6cd, type: 3}
+  _lose: {fileID: 8300000, guid: fee32f9ee68444e4f9b38a0dcc788588, type: 3}
+  _bomb: {fileID: 8300000, guid: 21142320dc5d144e7bcd68e5c856d719, type: 3}
+  _resize: {fileID: 8300000, guid: 1c827aeb12ff5454e9634f5148f98d35, type: 3}
+  _spikes: {fileID: 8300000, guid: 41ecf3431b52140e4a6114e3c6344f7c, type: 3}
 --- !u!114 &2141783414
 MonoBehaviour:
   m_ObjectHideFlags: 0
