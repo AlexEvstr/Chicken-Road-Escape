@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: e53fcb5b7ea004337852a941184663e8
+guid: d25a2bccf1fdd4138940e6c2d9af8b05
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -9,7 +9,7 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - Concert One
+  - Bowlby One
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0
